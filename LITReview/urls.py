@@ -21,7 +21,7 @@ urlpatterns = [
     # admin urls
     path("admin/", admin.site.urls),
     # authentication urls
-    path("", LoginPageView.as_view(), name='login'),
-    path("signup/", SignupPageView.as_view(), name='signup'),
+    path("", LoginPageView.as_view(), name="login"),
+    path("signup/", SignupPageView.as_view(), name="signup"),
     # blog urls
 ]
