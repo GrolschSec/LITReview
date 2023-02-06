@@ -15,13 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from authentication.views import LoginPageView, SignupPageView
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth.views import LoginView, LogoutView
+from authentication.views import SignupPageView
+from ticket.views import CreateTicketView, FlowView
 
 urlpatterns = [
     # admin urls
     path("admin/", admin.site.urls),
     # authentication urls
-    path("", LoginPageView.as_view(), name="login"),
+    path(
+        "",
+        LoginView.as_view(
+            template_name="authentication/login.html",
+            redirect_authenticated_user=True,
+            next_page="flow",
+        ),
+        name="login",
+    ),
+    path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     path("signup/", SignupPageView.as_view(), name="signup"),
     # blog urls
+    path("flow/", FlowView.as_view(), name="flow"),
+    path("create_ticket/", CreateTicketView.as_view(), name="create-ticket"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
