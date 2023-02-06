@@ -5,6 +5,17 @@
     <title>LITReview | {% block title %}{% endblock title %}</title>
 </head>
 <body>
+    <header>
+        <h1>LITReview</h1>
+        {% if user.is_authenticated %}
+            <nav>
+                <a href="{% url 'flow' %}">Flow</a>
+                <a>Posts</a>
+                <a>Subscription</a>
+                <a href="{% url 'logout' %}">Logout</a>
+            </nav>
+        {% endif %}
+    </header>
     {% block content %}
     {% endblock content %}
 </body>
