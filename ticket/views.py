@@ -6,7 +6,7 @@ from .forms import TicketForm
 
 class CreateTicketView(LoginRequiredMixin, View):
     form_class = TicketForm
-    template = 'ticket/ticket.html'
+    template = 'ticket/create_ticket.html'
 
     def get(self, request):
         form = self.form_class()
