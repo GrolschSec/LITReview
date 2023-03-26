@@ -1,16 +1,39 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
     Log In
 {% endblock title %}
 
 {% block content %}
-    <h2>Create an account now</h2>
-    <a href="{% url 'signup' %}">Sign Up</a>
-    <h2>Log In</h2>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Connect">
-    </form>
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <img src="{% static 'images/logo.png' %}" class="img-fluid mx-auto d-block mb-3" alt="Your Logo"> {# Move the logo here, outside the card #}
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title">Log In</h4>
+        </div>
+        <div class="card-body">
+          <form method="post" action="">
+            {% csrf_token %}
+            <div class="mb-3">
+              {{ form.username.label_tag }}
+              {{ form.username }}
+            </div>
+            <div class="mb-3">
+              {{ form.password.label_tag }}
+              {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary">Connect</button>
+          </form>
+        </div>
+        <div class="card-footer">
+          <p class="text-muted">Don't have an account yet? <a href="{% url 'signup' %}">Sign up</a> now!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

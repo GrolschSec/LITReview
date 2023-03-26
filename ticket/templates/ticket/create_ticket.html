@@ -1,14 +1,40 @@
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}
     Create a ticket
 {% endblock title %}
 
 {% block content %}
-    <h1>Create a ticket</h1>
-    <form method="post" action="" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Send">
-    </form>
+
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title">Create a ticket</h4>
+        </div>
+        <div class="card-body">
+          <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              {{ form.title.label_tag }}
+              {{ form.title }}
+            </div>
+            <div class="mb-3">
+              {{ form.description.label_tag }}
+              {{ form.description }}
+            </div>
+            <div class="mb-3">
+              {{ form.image.label_tag }}
+              {{ form.image }}
+            </div>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

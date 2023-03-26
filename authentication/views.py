@@ -1,23 +1,17 @@
-from django.shortcuts import render, redirect
-from django.views import View
-from django.contrib.auth import authenticate, login
-from .forms import SignUpForm, LoginForm
-from django.conf import settings
+from django.views.generic.edit import CreateView
+from django.contrib.auth import login
+from django.urls import reverse_lazy
+from .forms import SignUpForm
 
 
-class SignupPageView(View):
+class SignupPageView(CreateView):
     form_class = SignUpForm
-    template = "authentication/signup.html"
+    template_name = "authentication/signup.html"
+    success_url = reverse_lazy("flow")
 
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template, {"form": form})
-
-    def post(self, request):
-        if request.method == "POST":
-            form = self.form_class(request.POST)
-            if form.is_valid():
-                user = form.save()
-                login(request, user)
-                return redirect(settings.LOGIN_REDIRECT_URL)
-            return render(request, self.template, {"form": form})
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(
+            self.request, self.object
+        )  # Log in the user after successful registration
+        return response
