@@ -7,11 +7,11 @@ from .forms import SignUpForm
 class SignupPageView(CreateView):
     form_class = SignUpForm
     template_name = "authentication/signup.html"
-    success_url = reverse_lazy("flow")
+    success_url = reverse_lazy("feed")
 
     def form_valid(self, form):
         response = super().form_valid(form)
         login(
             self.request, self.object
-        )  # Log in the user after successful registration
+        )
         return response

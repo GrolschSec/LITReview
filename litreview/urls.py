@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 from authentication.views import SignupPageView
-from ticket.views import CreateTicketView, FlowView
+import ticket.views
 
 urlpatterns = [
     # admin urls
@@ -30,15 +30,24 @@ urlpatterns = [
         LoginView.as_view(
             template_name="authentication/login.html",
             redirect_authenticated_user=True,
-            next_page="flow",
+            next_page="feed",
         ),
         name="login",
     ),
     path("logout/", LogoutView.as_view(next_page="login"), name="logout"),
     path("signup/", SignupPageView.as_view(), name="signup"),
     # blog urls
-    path("flow/", FlowView.as_view(), name="flow"),
-    path("create_ticket/", CreateTicketView.as_view(), name="create-ticket"),
+    path("feed/", ticket.views.FeedView.as_view(), name="feed"),
+    path("posts/", ticket.views.PostView.as_view(), name="posts"),
+    # ticket urls
+    path("create_ticket/", ticket.views.CreateTicketView.as_view(), name="create-ticket"),
+    path('modify_ticket/<int:pk>/', ticket.views.ModifyTicketView.as_view(), name='modify-ticket'),
+    path('delete_ticket/<int:pk>/', ticket.views.DeleteTicketView.as_view(), name='delete-ticket'),
+    # review urls
+    path('create_review/', ticket.views.CreateReviewView.as_view(), name='create-review'),
+    path('create_review/<int:ticket_id>/', ticket.views.CreateReviewView.as_view(), name='create-review'),
+    path('modify_review/<int:review_id>/', ticket.views.ModifyTicketView.as_view(), name='modify-review'),
+    #path('delete_review/<int:review_id>/', ticket.views.DeleteReviewView.as_view(), name='delete-review')
 ]
 
 if settings.DEBUG:

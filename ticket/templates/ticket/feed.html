@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block title %}
+    Feed
+{% endblock title %}
+
+{% block content %}
+    <!-- Your header code -->
+
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 text-center mb-4">
+                <a href="{% url 'create-ticket' %}" class="btn btn-primary me-2">Ask for a review</a>
+                <a href="" class="btn btn-primary">Create a review</a>
+            </div>
+            {% for post in object_list %}
+                <div class="col-md-6 offset-md-3 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            {% if post|is_ticket %}
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6">
+                                        {% if post.user == request.user %}
+                                            <p>You asked for a review.&nbsp;</p>
+                                        {% else %}
+                                            <p>{{ post.user.username }} asked for a review.</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 text-md-right">
+                                        <p>{{ post.time_created|date:"H:i, j F Y" }}</p>
+                                    </div>
+                                </div>
+                                <h2 class="text-center font-weight-bold mb-3">{{ post.title }}</h2>
+                                <p>{{ post.description }}</p>
+                                {% if post.image %}
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid d-block mx-auto">
+                                {% endif %}
+                                {% if not post.review_set.all %}
+                                    <div class="text-center mt-3">
+                                        <a href="" class="btn btn-primary">Create a review</a>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div class="row justify-content-between">
+                                    <div class="col-md-6">
+                                        {% if post.user == request.user %}
+                                            <p>You published a review.&nbsp;</p>
+                                        {% else %}
+                                            <p>{{ post.user.username }} published a review.</p>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-6 text-md-right">
+                                        <p>{{ post.time_created|date:"H:i, j F Y" }}</p>
+                                    </div>
+                                </div>
+                                <h2 class="text-center font-weight-bold mb-3">{{ post.headline }} - {{ post.rating }} stars</h2>
+                                <p>{{ post.body }}</p>
+                                <p>Ticket - {{ post.ticket.user.username }}</p>
+                                <p>{{ post.ticket.title }}</p>
+                                {% if post.ticket.image %}
+                                    <img src="{{ post.ticket.image.url }}" alt="{{ post.ticket.title }}" class="img-fluid d-block mx-auto">
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
