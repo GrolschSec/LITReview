@@ -13,11 +13,15 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 
+# User model
+
+AUTH_USER_MODEL = "authentication.CustomUser"
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 # Quick-start development settings - unsuitable for production
@@ -29,7 +33,7 @@ SECRET_KEY = "django-insecure-+%!n-ty4&a$hcx(vs&+5i=5^eljvjw@hf2vl-e@@4=7*nq3x^#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['litreview.local']
+ALLOWED_HOSTS = ["litreview.local"]
 
 
 # Application definition

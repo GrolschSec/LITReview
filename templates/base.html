@@ -8,11 +8,9 @@
     <script src="{% static 'bootstrap.js' %}"></script>
 </head>
 <body>
-    <header>
         {% if user.is_authenticated %}
             {% include 'header.html' %}
         {% endif %}
-    </header>
     {% block content %}
     {% endblock content %}
 </body>

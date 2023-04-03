@@ -12,7 +12,7 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
     form_class = TicketForm
     template_name = "ticket/create_ticket.html"
     model = Ticket
-    success_url = reverse_lazy("flow")
+    success_url = reverse_lazy("feed")
 
     def form_valid(self, form):
         form.instance.user = self.request.user

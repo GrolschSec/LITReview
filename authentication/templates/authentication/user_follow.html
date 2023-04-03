@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Subscription
+{% endblock title %}
+
+{% block content %}
+    <div class="container d-flex flex-column justify-content-around min-vh-100">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Subscribe</h2>
+                <form method="post" action="{% url 'subscription' %}" class="d-flex">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" name="username" placeholder="Enter a username to subscribe">
+                    <input type="hidden" name="action" value="subscribe">
+                    <button type="submit" class="btn btn-primary ms-2">Subscribe</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Subscriptions</h2>
+                {% for user in following %}
+                    <div class="d-flex align-items-center mb-2">
+                        <p class="mb-0 me-2">{{ user.username }}</p>
+                        <form method="post" action="{% url 'subscription' %}" class="mb-0 ms-auto">
+                            {% csrf_token %}
+                            <input type="hidden" name="action" value="unsubscribe">
+                            <input type="hidden" name="username" value="{{ user.username }}">
+                            <input type="submit" class="btn btn-danger" value="Unsubscribe">
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2>Subscribers</h2>
+                {% for user in followers %}
+                    <p>{{ user.username }}</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock content %}

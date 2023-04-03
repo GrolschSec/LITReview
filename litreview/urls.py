@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
+import authentication.views
 from authentication.views import SignupPageView
 import ticket.views
 
@@ -39,6 +40,7 @@ urlpatterns = [
     # blog urls
     path("feed/", ticket.views.FeedView.as_view(), name="feed"),
     path("posts/", ticket.views.PostView.as_view(), name="posts"),
+    path("subscription/", authentication.views.SubscriptionView.as_view(), name="subscription"),
     # ticket urls
     path("create_ticket/", ticket.views.CreateTicketView.as_view(), name="create-ticket"),
     path('modify_ticket/<int:pk>/', ticket.views.ModifyTicketView.as_view(), name='modify-ticket'),
@@ -47,7 +49,7 @@ urlpatterns = [
     path('create_review/', ticket.views.CreateReviewView.as_view(), name='create-review'),
     path('create_review/<int:ticket_id>/', ticket.views.CreateReviewView.as_view(), name='create-review'),
     path('modify_review/<int:review_id>/', ticket.views.ModifyTicketView.as_view(), name='modify-review'),
-    #path('delete_review/<int:review_id>/', ticket.views.DeleteReviewView.as_view(), name='delete-review')
+    # path('delete_review/<int:review_id>/', ticket.views.DeleteReviewView.as_view(), name='delete-review')
 ]
 
 if settings.DEBUG:
