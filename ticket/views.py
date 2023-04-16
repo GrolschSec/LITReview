@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+from django.core.exceptions import ValidationError
 from .forms import TicketForm, ReviewForm
 from .models import Ticket, Review
 from itertools import chain
@@ -21,15 +22,15 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
 
 class ModifyTicketView(LoginRequiredMixin, UpdateView):
     model = Ticket
-    success_url = reverse_lazy('posts')
-    template_name = 'ticket/modify_ticket.html'
-    fields = ['title', 'description', 'image']
+    success_url = reverse_lazy("posts")
+    template_name = "ticket/modify_ticket.html"
+    fields = ["title", "description", "image"]
 
 
 class DeleteTicketView(LoginRequiredMixin, DeleteView):
     model = Ticket
-    success_url = reverse_lazy('posts')
-    template_name = 'ticket/ticket_confirm_delete.html'
+    success_url = reverse_lazy("posts")
+    template_name = "ticket/ticket_confirm_delete.html"
 
 
 class CreateReviewView(LoginRequiredMixin, CreateView):
@@ -44,10 +45,8 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
         if ticket_id:
             ticket = Ticket.objects.get(id=ticket_id)
             context["ticket"] = ticket
-            context["ticket_form"] = TicketForm(instance=ticket)
         else:
             context["ticket_form"] = TicketForm()
-
         return context
 
     def form_valid(self, form):
@@ -60,24 +59,27 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
             if ticket_form.is_valid():
                 ticket = ticket_form.save(commit=False)
                 ticket.user = self.request.user
-                ticket.save()
-
+                ticket.save()  # Save the ticket instance
+            else:
+                form.add_error(None, ValidationError("Ticket form is invalid"))
+                return self.form_invalid(form)
         review = form.save(commit=False)
         review.ticket = ticket
         review.user = self.request.user
         review.save()
-
-        return redirect("flow")
+        return redirect("feed")
 
 
 class PostView(LoginRequiredMixin, ListView):
-    template_name = 'ticket/posts.html'
+    template_name = "ticket/posts.html"
 
     def get_queryset(self):
         user_tickets = Ticket.objects.filter(user=self.request.user)
         user_reviews = Review.objects.filter(user=self.request.user)
         combined = sorted(
-            chain(user_tickets, user_reviews), key=lambda obj: obj.time_created, reverse=True
+            chain(user_tickets, user_reviews),
+            key=lambda obj: obj.time_created,
+            reverse=True,
         )
         return combined
 

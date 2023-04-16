@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Create a review
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="card-title mb-0">Create a review</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {% if ticket_form %}
+                            <h5 class="mb-3{% if ticket_id %} d-none{% endif %}">Ticket Information</h5>
+                            <div class="mb-3{% if ticket_id %} d-none{% endif %}">
+                                {{ ticket_form.title.label_tag }}
+                                {{ ticket_form.title }}
+                            </div>
+                            <div class="mb-3{% if ticket_id %} d-none{% endif %}">
+                                {{ ticket_form.description.label_tag }}
+                                {{ ticket_form.description }}
+                            </div>
+                            <div class="mb-3{% if ticket_id %} d-none{% endif %}">
+                                {{ ticket_form.image.label_tag }}
+                                {{ ticket_form.image }}
+                            </div>
+                        {% endif %}
+                        {% if ticket %}
+                            <h5 class="mb-3">Ticket Information</h5>
+                            <div class="mb-3">
+                                <strong>{{ ticket.title }}</strong>
+                                <p>{{ ticket.description }}</p>
+                                {% if ticket.image %}
+                                    <img src="{{ ticket.image.url }}" alt="{{ ticket.title }}" class="img-fluid d-block mx-auto">
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <h5 class="mb-3">Review Information</h5>
+                        <div class="mb-3">
+                            {{ form.headline.label_tag }}
+                            {{ form.headline }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.rating.label_tag }}
+                            {{ form.rating }}
+                        </div>
+                        <div class="mb-3">
+                            {{ form.body.label_tag }}
+                            {{ form.body }}
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

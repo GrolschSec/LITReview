@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-md-6 offset-md-3 text-center mb-4">
                 <a href="{% url 'create-ticket' %}" class="btn btn-primary me-2">Ask for a review</a>
-                <a href="" class="btn btn-primary">Create a review</a>
+                <a href="{% url 'create-review' %}" class="btn btn-primary">Create a review</a>
             </div>
             {% for post in object_list %}
                 <div class="col-md-6 offset-md-3 mb-4">
@@ -39,7 +39,7 @@
                                 {% endif %}
                                 {% if not post.review_set.all %}
                                     <div class="text-center mt-3">
-                                        <a href="" class="btn btn-primary">Create a review</a>
+                                        <a href="{% url 'create-review' post.id %}" class="btn btn-primary">Create a review</a>
                                     </div>
                                 {% endif %}
                             {% else %}
