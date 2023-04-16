@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    Modify a review
+{% endblock title %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title">Modify your review</h4>
+        </div>
+        <div class="card-body">
+          <form method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              {{ form.headline.label_tag }}
+              {{ form.headline }}
+            </div>
+            <div class="mb-3">
+              {{ form.rating.label_tag }}
+              {{ form.rating }}
+            </div>
+            <div class="mb-3">
+              {{ form.body.label_tag }}
+              {{ form.body }}
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

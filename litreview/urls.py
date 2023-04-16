@@ -48,8 +48,8 @@ urlpatterns = [
     # review urls
     path('create_review/', ticket.views.CreateReviewView.as_view(), name='create-review'),
     path('create_review/<int:ticket_id>/', ticket.views.CreateReviewView.as_view(), name='create-review'),
-    path('modify_review/<int:review_id>/', ticket.views.ModifyTicketView.as_view(), name='modify-review'),
-    # path('delete_review/<int:review_id>/', ticket.views.DeleteReviewView.as_view(), name='delete-review')
+    path('modify_review/<int:pk>/', ticket.views.ModifyReviewView.as_view(), name='modify-review'),
+    path('delete_review/<int:pk>/', ticket.views.DeleteReviewView.as_view(), name='delete-review'),
 ]
 
 if settings.DEBUG:

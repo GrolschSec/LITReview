@@ -46,8 +46,8 @@
                                 <a href="{% url 'modify-ticket' post.id %}" class="btn btn-primary me-2">Modify Ticket</a>
                                 <a href="{% url 'delete-ticket' post.id %}" class="btn btn-danger">Delete Ticket</a>
                             {% else %}
-                                <a href="" class="btn btn-primary me-2">Modify Review</a>
-                                <button class="btn btn-danger">Delete Review</button>
+                                <a href="{% url 'modify-review' post.id %}" class="btn btn-primary me-2">Modify Review</a>
+                                <a href="{% url 'delete-review' post.id %}" class="btn btn-danger">Delete Review</a>
                             {% endif %}
                         </div>
                     </div>

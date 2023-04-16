@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from django.core.exceptions import ValidationError
@@ -68,6 +68,28 @@ class CreateReviewView(LoginRequiredMixin, CreateView):
         review.user = self.request.user
         review.save()
         return redirect("feed")
+
+
+class ModifyReviewView(LoginRequiredMixin, UpdateView):
+    model = Review
+    fields = ["headline", "rating", "body"]
+    template_name = "ticket/modify_review.html"
+
+    def get_queryset(self):
+        return Review.objects.filter(user=self.request.user)
+
+    def get_success_url(self):
+        return reverse_lazy("posts")
+
+
+class DeleteReviewView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Review
+    template_name = "ticket/delete_review.html"
+    success_url = reverse_lazy("posts")
+
+    def test_func(self):
+        review = self.get_object()
+        return review.user == self.request.user
 
 
 class PostView(LoginRequiredMixin, ListView):
