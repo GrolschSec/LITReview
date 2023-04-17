@@ -20,17 +20,25 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ModifyTicketView(LoginRequiredMixin, UpdateView):
+class ModifyTicketView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
     model = Ticket
     success_url = reverse_lazy("posts")
     template_name = "ticket/modify_ticket.html"
     fields = ["title", "description", "image"]
 
+    def test_func(self):
+        ticket = self.get_object()
+        return ticket.user == self.request.user
 
-class DeleteTicketView(LoginRequiredMixin, DeleteView):
+
+class DeleteTicketView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Ticket
     success_url = reverse_lazy("posts")
     template_name = "ticket/ticket_confirm_delete.html"
+
+    def test_func(self):
+        ticket = self.get_object()
+        return ticket.user == self.request.user
 
 
 class CreateReviewView(LoginRequiredMixin, CreateView):
