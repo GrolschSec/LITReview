@@ -20,7 +20,7 @@ class CreateTicketView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ModifyTicketView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
+class ModifyTicketView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Ticket
     success_url = reverse_lazy("posts")
     template_name = "ticket/modify_ticket.html"

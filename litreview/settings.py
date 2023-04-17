@@ -33,7 +33,7 @@ SECRET_KEY = "django-insecure-+%!n-ty4&a$hcx(vs&+5i=5^eljvjw@hf2vl-e@@4=7*nq3x^#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["litreview.local", "127.0.0.1"]
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
