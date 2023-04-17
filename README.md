@@ -7,7 +7,6 @@ LitReview is a web application that allows users to create and manage tickets fo
 1. [Features](#features)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [License](#license)
 
 ## Features
 
