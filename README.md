@@ -62,7 +62,6 @@ python manage.py runserver
 
 2. Open your web browser and visit `http://127.0.0.1:8000/`.
 
-3. Register a new user account or log in with an existing account.
+3. Register a new user account or log in with an existing account. (I added a database for testing purpose, the default user is: user0 and the default password is: 5Zj48njq889KmY8F8K)
 
 4. Create tickets for literature reviews, publish reviews on existing tickets, and manage your own tickets and reviews.
-

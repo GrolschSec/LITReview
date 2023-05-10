@@ -22,18 +22,22 @@ class SignupPageView(CreateView):
 
 
 class SubscriptionView(LoginRequiredMixin, View):
-    template_name = 'authentication/user_follow.html'
+    template_name = "authentication/user_follow.html"
 
     def get(self, request, *args, **kwargs):
         following = request.user.following.all()
         followers = CustomUser.objects.filter(following__in=[request.user])
-        return render(request, self.template_name, {'following': following, 'followers': followers})
+        return render(
+            request,
+            self.template_name,
+            {"following": following, "followers": followers},
+        )
 
     def post(self, request, *args, **kwargs):
-        action = request.POST.get('action')
+        action = request.POST.get("action")
 
-        if action == 'subscribe':
-            username = request.POST.get('username')
+        if action == "subscribe":
+            username = request.POST.get("username")
             if username == request.user.username:
                 return redirect("subscription")
             user_to_follow = CustomUser.objects.filter(username=username).first()
@@ -41,11 +45,13 @@ class SubscriptionView(LoginRequiredMixin, View):
                 request.user.following.add(user_to_follow)
                 messages.success(request, "Successfully subscribed to the user.")
             else:
-                messages.error(request, "Failed to subscribe to the user. User not found.")
+                messages.error(
+                    request, "Failed to subscribe to the user. User not found."
+                )
             return redirect("subscription")
 
-        elif action == 'unsubscribe':
-            username = request.POST.get('username')
+        elif action == "unsubscribe":
+            username = request.POST.get("username")
             user_to_unfollow = CustomUser.objects.filter(username=username).first()
             request.user.following.remove(user_to_unfollow)
             messages.success(request, "Successfully unsubscribed from the user.")
