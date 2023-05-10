@@ -34,7 +34,15 @@
                                 <!-- Review display code -->
                                 <p>You published a review</p>
                                 <p>{{ post.headline }}</p>
-                                <p>{{ post.rating }} stars</p>
+                                <p>
+                                    {% for star in "12345"|make_list %}
+                                        {% if star|add:0 <= post.rating %}
+                                            &#9733;
+                                        {% else %}
+                                            &#9734;
+                                        {% endif %}
+                                    {% endfor %}
+                                </p>
                                 <p>{{ post.time_created|date:"H:i, j F Y" }}</p>
                                 <p>{{ post.body }}</p>
                                 <p>Ticket - {{ post.ticket.user.username }}</p>

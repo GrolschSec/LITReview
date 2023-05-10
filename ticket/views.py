@@ -118,8 +118,10 @@ class FeedView(LoginRequiredMixin, ListView):
     template_name = "ticket/feed.html"
 
     def get_queryset(self):
-        tickets = Ticket.objects.all()
-        reviews = Review.objects.all()
+        following_users = self.request.user.following.all()
+        following_users = list(following_users) + [self.request.user]
+        tickets = Ticket.objects.filter(user__in=following_users)
+        reviews = Review.objects.filter(user__in=following_users)
         combined = sorted(
             chain(tickets, reviews), key=lambda obj: obj.time_created, reverse=True
         )
