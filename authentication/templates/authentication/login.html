@@ -9,8 +9,25 @@
 {% block content %}
 <div class="container">
   <div class="row justify-content-center mt-5">
-    <div class="col-md-6">
-      <img src="{% static 'images/logo.png' %}" class="img-fluid mx-auto d-block mb-3" alt="Your Logo"> {# Move the logo here, outside the card #}
+    <div class="col-12 text-center mb-4">
+      <img src="{% static 'images/logo.png' %}" class="img-fluid" alt="Litreview logo">
+    </div>
+  </div>
+  <div class="row justify-content-around mt-5">
+    <!-- Sign Up block -->
+    <div class="col-md-5">
+      <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+          <h4 class="card-title">Don't have an account?</h4>
+        </div>
+        <div class="card-body">
+          <p class="text-muted">Sign up to get started!</p>
+          <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a>
+        </div>
+      </div>
+    </div>
+    <!-- Log In block -->
+    <div class="col-md-5">
       <div class="card shadow">
         <div class="card-header bg-primary text-white">
           <h4 class="card-title">Log In</h4>
@@ -28,9 +45,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Connect</button>
           </form>
-        </div>
-        <div class="card-footer">
-          <p class="text-muted">Don't have an account yet? <a href="{% url 'signup' %}">Sign up</a> now!</p>
         </div>
       </div>
     </div>
