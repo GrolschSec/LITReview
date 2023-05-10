@@ -49,7 +49,9 @@
                         </div>
                         <div class="mb-3">
                             {{ form.rating.label_tag }}
-                            {{ form.rating }}
+                            {% for choice in form.rating %}
+                                {{ choice.tag }} {{ choice.choice_label }}
+                            {% endfor %}
                         </div>
                         <div class="mb-3">
                             {{ form.body.label_tag }}

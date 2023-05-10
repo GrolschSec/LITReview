@@ -1,4 +1,4 @@
-from django.forms import Form, ModelForm, ModelChoiceField, HiddenInput, formset_factory
+from django.forms import Form, ModelForm, ModelChoiceField, HiddenInput, formset_factory, RadioSelect
 from .models import Ticket, Review
 
 
@@ -16,3 +16,7 @@ class ReviewForm(ModelForm):
             "rating",
             "body",
         ]
+        RATING_CHOICES = [(i, str(i)) for i in range(0, 6)]
+        widgets = {
+            'rating': RadioSelect(choices=RATING_CHOICES),
+        }
