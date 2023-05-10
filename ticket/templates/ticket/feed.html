@@ -55,7 +55,15 @@
                                         <p>{{ post.time_created|date:"H:i, j F Y" }}</p>
                                     </div>
                                 </div>
-                                <h2 class="text-center font-weight-bold mb-3">{{ post.headline }} - {{ post.rating }} stars</h2>
+                                <h2 class="text-center font-weight-bold mb-3">{{ post.headline }} -
+                                    {% for star in "12345"|make_list %}
+                                        {% if star|add:0 <= post.rating %}
+                                            &#9733;
+                                        {% else %}
+                                            &#9734;
+                                        {% endif %}
+                                    {% endfor %}
+                                </h2>
                                 <p>{{ post.body }}</p>
                                 <p>Ticket - {{ post.ticket.user.username }}</p>
                                 <p>{{ post.ticket.title }}</p>
